@@ -22,6 +22,7 @@ import {
   fetchIngredients,
   getIngredientsSelector
 } from '../../slices/ingredientsSlice';
+import { getConstructorData } from '../../slices/constructorSlice';
 import { RootState, AppDispatch } from '../../services/store';
 
 const App = () => {
@@ -78,8 +79,6 @@ const App = () => {
           }
         />
         <Route path='/ingredients/:id' element={<IngredientDetails />} />
-
-        {/*        
         <Route path='/feed' element={<Feed />} />
         <Route
           path='/login'
@@ -129,19 +128,19 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route path='*' element={<NotFound404 />} /> */}
+        <Route path='*' element={<NotFound404 />} />
       </Routes>
 
       {location.state?.background && (
         <Routes>
-          {/* <Route
-          path='/feed/:number'
-          element={
-            <Modal title='' onClose={}>
-              <OrderInfo />
-            </Modal>
-          }
-        /> */}
+          <Route
+            path='/feed/:number'
+            element={
+              <Modal title='' onClose={() => navigate(-1)}>
+                <OrderInfo />
+              </Modal>
+            }
+          />
 
           <Route
             path='/ingredients/:id'
