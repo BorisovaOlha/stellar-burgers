@@ -8,7 +8,8 @@ import {
 } from '../../slices/constructorSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from 'src/services/store';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { authenticatedSelector } from '../../slices/userSlice';
 
 export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
@@ -20,7 +21,6 @@ export const BurgerConstructor: FC = () => {
   // };
 
   // const orderRequest = false;
-
   // const orderModalData = null;
 
   const dispatch = useDispatch<AppDispatch>();
@@ -29,17 +29,17 @@ export const BurgerConstructor: FC = () => {
 
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
+    const isAuthenticated = useSelector(authenticatedSelector);
+
+    if (!isAuthenticated) {
+      return <Navigate to={'/login'} />;
+    }
 
     const ingredientsIds = [
       constructorItems.bun!._id,
       ...constructorItems.ingredients.map((i) => i._id)
     ];
-
-    console.log(ingredientsIds);
-
     dispatch(createOrder(ingredientsIds));
-
-    console.log(orderModalData);
   };
   const closeOrderModal = () => {
     dispatch(clearOrderModalData());

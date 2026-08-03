@@ -3,7 +3,8 @@ import { LoginUI } from '@ui-pages';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from 'src/services/store';
 import {
-  getUserState,
+  userDataSelector,
+  errorSelector,
   loginUser,
   authenticatedSelector
 } from '../../slices/userSlice';
@@ -31,7 +32,7 @@ export const Login: FC = () => {
     return <Navigate to={'/'} />;
   }
 
-  const { error } = useSelector(getUserState);
+  const error = useSelector(errorSelector);
 
   return (
     <LoginUI

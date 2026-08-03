@@ -1,10 +1,10 @@
 import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getUserState } from '../../slices/userSlice';
+import { userDataSelector } from '../../slices/userSlice';
 
 export const Profile: FC = () => {
-  const { user } = useSelector(getUserState);
+  const user = useSelector(userDataSelector);
   const [formValue, setFormValue] = useState({
     name: user?.name ?? '',
     email: user?.email ?? '',

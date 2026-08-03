@@ -24,6 +24,7 @@ import {
 } from '../../slices/ingredientsSlice';
 import { getConstructorData } from '../../slices/constructorSlice';
 import { RootState, AppDispatch } from '../../services/store';
+import { checkUserAuth, getUser } from '../../slices/userSlice';
 
 const App = () => {
   const location = useLocation();
@@ -36,6 +37,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(fetchIngredients());
+    dispatch(checkUserAuth());
   }, [dispatch]);
 
   /** TODO: взять переменные из стора */
@@ -83,7 +85,7 @@ const App = () => {
         <Route
           path='/login'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyUnAuth>
               <Login />
             </ProtectedRoute>
           }
@@ -91,7 +93,7 @@ const App = () => {
         <Route
           path='/register'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyUnAuth>
               <Register />
             </ProtectedRoute>
           }
@@ -99,7 +101,7 @@ const App = () => {
         <Route
           path='/forgot-password'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyUnAuth>
               <ForgotPassword />
             </ProtectedRoute>
           }
@@ -107,7 +109,7 @@ const App = () => {
         <Route
           path='/reset-password'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyUnAuth>
               <ResetPassword />
             </ProtectedRoute>
           }
@@ -141,7 +143,6 @@ const App = () => {
               </Modal>
             }
           />
-
           <Route
             path='/ingredients/:id'
             element={
@@ -150,16 +151,16 @@ const App = () => {
               </Modal>
             }
           />
-          {/* <Route
-          path='/profile/orders/:number'
-          element={
-            <ProtectedRoute>
-              <Modal title='' onClose={}>
-                <OrderInfo />
-              </Modal>
-            </ProtectedRoute>
-          }
-        /> */}
+          <Route
+            path='/profile/orders/:number'
+            element={
+              <ProtectedRoute>
+                <Modal title='' onClose={() => navigate(-1)}>
+                  <OrderInfo />
+                </Modal>
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       )}
     </div>
