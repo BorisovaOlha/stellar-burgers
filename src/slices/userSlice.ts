@@ -23,7 +23,7 @@ import { useSelector } from 'react-redux';
 import { getCookie, setCookie, deleteCookie } from '../utils/cookie';
 
 interface TUserState {
-  isAuthChecked: boolean; // флаг для статуса проверки токена пользователя
+  isAuthChecked: boolean;
   isAuthenticated: boolean;
   user: TUser | null;
   isLoading: boolean;
@@ -72,6 +72,9 @@ export const userSlice = createSlice({
     },
     userLogout: (state) => {
       state.user = null;
+    },
+    clearError: (state) => {
+      state.error = undefined;
     }
   },
   selectors: {
@@ -123,7 +126,7 @@ export const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { authChecked, userLogout } = userSlice.actions;
+export const { authChecked, userLogout, clearError } = userSlice.actions;
 export const {
   userDataSelector,
   authenticatedSelector,
@@ -154,9 +157,9 @@ export const logoutUser = createAsyncThunk(
   (_, { dispatch }) => {
     logoutApi()
       .then(() => {
-        localStorage.clear(); // очищаем refreshToken
-        deleteCookie('accessToken'); // очищаем accessToken
-        dispatch(userLogout()); // удаляем пользователя из хранилища
+        localStorage.clear();
+        deleteCookie('accessToken');
+        dispatch(userLogout());
       })
       .catch(() => {
         console.log('Ошибка выполнения выхода');
@@ -195,9 +198,3 @@ export const updateUser = createAsyncThunk(
   'user/updateUser',
   async (user: Partial<TRegisterData>) => updateUserApi(user)
 );
-
-// В случае с заказами мы ориентируемся на данные,
-// который возвращает сервер. Если данные не соответствуют типу
-// заданному в коде проекта, нужно либо поправить этот тип
-// (если он больше нигде не используется кроме как для этого запроса),
-// либо создать новый тип специально для этого запроса.

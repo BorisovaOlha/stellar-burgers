@@ -23,14 +23,7 @@ export const fetchIngredients = createAsyncThunk<TIngredient[]>(
 export const ingredientsSlice = createSlice({
   name: 'ingredients',
   initialState,
-  reducers: {
-    // addIngredient: (state, action: PayloadAction<TIngredient>) => {
-    //   state.ingredients.push(action.payload);
-    // },
-    // removeIngredient: (state, action) => {
-    //   state.ingredients = state.ingredients.filter(i => i.id !== action.payload);
-    // }
-  },
+  reducers: {},
   selectors: {
     getIngredientsSelector: (state) => state
   },

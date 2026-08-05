@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from 'src/services/store';
 
 export const Feed: FC = () => {
-  /** TODO: взять переменную из стора */
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {

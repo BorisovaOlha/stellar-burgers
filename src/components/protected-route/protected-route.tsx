@@ -13,7 +13,6 @@ type ProtectedRouteProps = {
   children: ReactNode;
 };
 
-// TODO: поменять логику функции: если нет пользователя, перенаправляем его на страницу логина
 export const ProtectedRoute = ({
   onlyUnAuth,
   children
@@ -27,12 +26,10 @@ export const ProtectedRoute = ({
   }
 
   if (!onlyUnAuth && !user) {
-    //  если маршрут для авторизованного пользователя, но пользователь не авторизован, то делаем редирект
     return <Navigate replace to='/login' state={{ from: location }} />;
   }
 
   if (onlyUnAuth && user) {
-    //  если маршрут для неавторизованного пользователя, но пользователь авторизован
     const from = location.state?.from || { pathname: '/' };
 
     return <Navigate replace to={from} />;

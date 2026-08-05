@@ -6,7 +6,6 @@ import { getIngredientsSelector } from '../../slices/ingredientsSlice';
 import { useLocation, useParams } from 'react-router-dom';
 
 export const IngredientDetails: FC = () => {
-  /** TODO: взять переменную из стора */
   const { ingredients } = useSelector(getIngredientsSelector);
   const { id } = useParams();
 

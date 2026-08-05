@@ -12,27 +12,18 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { authenticatedSelector } from '../../slices/userSlice';
 
 export const BurgerConstructor: FC = () => {
-  /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
-  // const constructorItems = {
-  //   bun: {
-  //     price: 0
-  //   },
-  //   ingredients: []
-  // };
-
-  // const orderRequest = false;
-  // const orderModalData = null;
-
   const dispatch = useDispatch<AppDispatch>();
   const { constructorItems, orderRequest, orderModalData } =
     useSelector(getConstructorData);
+  const isAuthenticated = useSelector(authenticatedSelector);
+  const navigate = useNavigate();
 
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
-    const isAuthenticated = useSelector(authenticatedSelector);
 
     if (!isAuthenticated) {
-      return <Navigate to={'/login'} />;
+      navigate('/login');
+      return;
     }
 
     const ingredientsIds = [

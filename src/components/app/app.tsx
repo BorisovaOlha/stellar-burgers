@@ -40,20 +40,6 @@ const App = () => {
     dispatch(checkUserAuth());
   }, [dispatch]);
 
-  /** TODO: взять переменные из стора */
-  // const isIngredientsLoading = false;
-  // const ingredients = [];
-  // const error = null;
-
-  // TODO: UseEffect - взять ингредиенты с сервера здесь для отрисовки ConstructorPage.
-  // А именно написать асинх экшен, чтобы сделать запрос, создать слайс, чтобы хранить
-  // полученные ингредиенты, в Апп через ЮзЭффект сделать запрос (задиспатчить экшен) и проверить
-  // завершился ли запрос, есть ли ошибки. Если запрос выполняется, отображать AppHeader и прелоадер после него.
-  // Если ошиька, то AppHeader и сообщение об ошибке. А если пришли ингредиенты,
-  // то маршрут ConstructorPage. Далее - реализовать открытие модалки по клику.
-  // Потом перейти к бургер конструктору. Для конструктора - другой слайс.
-  // В других частях кода:
-
   return (
     <div className={styles.app}>
       <AppHeader />
@@ -82,6 +68,7 @@ const App = () => {
         />
         <Route path='/ingredients/:id' element={<IngredientDetails />} />
         <Route path='/feed' element={<Feed />} />
+        <Route path='/feed/:number' element={<OrderInfo />} />
         <Route
           path='/login'
           element={
@@ -127,6 +114,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <ProfileOrders />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/profile/orders/:number'
+          element={
+            <ProtectedRoute>
+              <OrderInfo />
             </ProtectedRoute>
           }
         />
