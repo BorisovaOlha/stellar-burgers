@@ -12,7 +12,7 @@ import {
   TNewOrder,
   TNewOrderResponse
 } from '../utils/burger-api';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../services/store';
 
 interface TConstructorState {
   constructorItems: {

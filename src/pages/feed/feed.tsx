@@ -8,11 +8,11 @@ import {
   getTotalTodayOrdersNumber,
   fetchFeed
 } from '../../slices/feedSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/store';
 import { AppDispatch } from 'src/services/store';
 
 export const Feed: FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchFeed());

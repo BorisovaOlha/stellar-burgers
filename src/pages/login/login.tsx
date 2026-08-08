@@ -1,9 +1,8 @@
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { LoginUI } from '@ui-pages';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/store';
 import { AppDispatch } from 'src/services/store';
 import {
-  userDataSelector,
   errorSelector,
   loginUser,
   authenticatedSelector,
@@ -15,7 +14,7 @@ import { Navigate } from 'react-router-dom';
 export const Login: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
   const isAuthenticated = useSelector(authenticatedSelector);
 
   useEffect(() => {
@@ -32,10 +31,6 @@ export const Login: FC = () => {
 
     dispatch(loginUser(userData));
   };
-
-  if (isAuthenticated) {
-    return <Navigate to={'/'} />;
-  }
 
   const error = useSelector(errorSelector);
 

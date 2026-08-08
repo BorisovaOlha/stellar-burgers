@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/store';
 import {
   authenticatedSelector,
   isAuthCheckedSelector,

@@ -7,13 +7,13 @@ import {
   getOrderByNumber,
   selectedOrderSelector
 } from '../../slices/orderSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/store';
 import { useParams } from 'react-router-dom';
 import { AppDispatch } from 'src/services/store';
 
 export const OrderInfo: FC = () => {
   const { number } = useParams();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
 
   const orderData = useSelector(selectedOrderSelector);
 

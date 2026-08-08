@@ -16,7 +16,7 @@ import { ProtectedRoute } from '../protected-route/protected-route';
 import { AppHeader, Modal, OrderInfo, IngredientDetails } from '@components';
 import { Preloader } from '@ui';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/store';
 import { useEffect } from 'react';
 import {
   fetchIngredients,
@@ -30,7 +30,7 @@ const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
   const { ingredients, isIngredientsLoading, error } = useSelector(
     getIngredientsSelector
   );

@@ -6,7 +6,6 @@ import {
   UnknownAction
 } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
-import { TOrder } from '@utils-types';
 import {
   registerUserApi,
   TOwner,
@@ -19,7 +18,6 @@ import {
   getUserApi,
   updateUserApi
 } from '../utils/burger-api';
-import { useSelector } from 'react-redux';
 import { getCookie, setCookie, deleteCookie } from '../utils/cookie';
 
 interface TUserState {
@@ -69,9 +67,6 @@ export const userSlice = createSlice({
   reducers: {
     authChecked: (state) => {
       state.isAuthChecked = true;
-    },
-    userLogout: (state) => {
-      state.user = null;
     },
     clearError: (state) => {
       state.error = undefined;
@@ -126,7 +121,7 @@ export const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { authChecked, userLogout, clearError } = userSlice.actions;
+export const { authChecked, clearError } = userSlice.actions;
 export const {
   userDataSelector,
   authenticatedSelector,
@@ -152,20 +147,12 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const logoutUser = createAsyncThunk(
-  'user/logoutUser',
-  (_, { dispatch }) => {
-    logoutApi()
-      .then(() => {
-        localStorage.clear();
-        deleteCookie('accessToken');
-        dispatch(userLogout());
-      })
-      .catch(() => {
-        console.log('Ошибка выполнения выхода');
-      });
-  }
-);
+export const logoutUser = createAsyncThunk('user/logoutUser', async () => {
+  await logoutApi();
+
+  localStorage.clear();
+  deleteCookie('accessToken');
+});
 
 export const checkUserAuth = createAsyncThunk(
   'user/checkUser',

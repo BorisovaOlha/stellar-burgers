@@ -6,13 +6,12 @@ import {
   createOrder,
   clearOrderModalData
 } from '../../slices/constructorSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from 'src/services/store';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from '../../services/store';
+import { useNavigate } from 'react-router-dom';
 import { authenticatedSelector } from '../../slices/userSlice';
 
 export const BurgerConstructor: FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
   const { constructorItems, orderRequest, orderModalData } =
     useSelector(getConstructorData);
   const isAuthenticated = useSelector(authenticatedSelector);
