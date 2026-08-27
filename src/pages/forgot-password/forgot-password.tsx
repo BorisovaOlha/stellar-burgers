@@ -14,6 +14,12 @@ export const ForgotPassword: FC = () => {
     e.preventDefault();
 
     setError(null);
+
+    if (!email.trim()) {
+      setError(new Error('Введите e-mail'));
+      return;
+    }
+
     forgotPasswordApi({ email })
       .then(() => {
         localStorage.setItem('resetPassword', 'true');
