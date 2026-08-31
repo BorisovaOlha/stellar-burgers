@@ -7,12 +7,22 @@ test.describe('Интеграционные тесты для страницы �
       update: false
     });
     await page.goto('/');
+
+    const constructor = page.getByTestId('constructor');
+
+    await expect(
+      constructor.getByText('Выберите булки', { exact: true })
+    ).toHaveCount(2);
+    await expect(
+      constructor.getByText('Выберите начинку', { exact: true })
+    ).toBeVisible();
+
     const card = page
       .locator('li')
       .filter({ hasText: 'Хрустящие минеральные кольца' });
+
     await expect(card).toBeVisible();
     await card.getByRole('button', { name: 'Добавить' }).click();
-    const constructor = page.getByTestId('constructor');
     await expect(
       constructor.getByText('Хрустящие минеральные кольца', { exact: true })
     ).toBeVisible();
@@ -38,6 +48,11 @@ test.describe('Интеграционные тесты для страницы �
 
       await page.routeFromHAR('./tests/hars/userData.har', {
         url: '**/auth/user',
+        update: false
+      });
+
+      await page.routeFromHAR('./tests/hars/ingredients.har', {
+        url: '**/api/ingredients',
         update: false
       });
 
@@ -75,6 +90,15 @@ test.describe('Интеграционные тесты для страницы �
       });
 
       await page.goto('/');
+      const constructor = page.getByTestId('constructor');
+      const orderModal = page.getByTestId('modal');
+
+      await expect(
+        constructor.getByText('Выберите булки', { exact: true })
+      ).toHaveCount(2);
+      await expect(
+        constructor.getByText('Выберите начинку', { exact: true })
+      ).toBeVisible();
 
       // Собирается бургер
       const bun = page
@@ -93,8 +117,6 @@ test.describe('Интеграционные тесты для страницы �
       await bun.getByRole('button', { name: 'Добавить' }).click();
       await ingredient.getByRole('button', { name: 'Добавить' }).click();
 
-      const constructor = page.getByTestId('constructor');
-
       await expect(
         constructor.getByText('Краторная булка N-200i (верх)', { exact: true })
       ).toBeVisible();
@@ -108,6 +130,7 @@ test.describe('Интеграционные тесты для страницы �
       ).toBeVisible();
 
       // Вызывается клик по кнопке «Оформить заказ»
+      await expect(orderModal).not.toBeVisible();
 
       await constructor
         .getByRole('button', {
@@ -117,7 +140,6 @@ test.describe('Интеграционные тесты для страницы �
 
       // Проверяется, что модальное окно открылось и номер заказа верный
 
-      const orderModal = page.getByTestId('modal');
       await expect(orderModal).toBeVisible();
 
       await expect(
@@ -156,9 +178,10 @@ test.describe('Интеграционные тесты для страницы �
         .locator('li')
         .filter({ hasText: 'Хрустящие минеральные кольца' });
 
-      await card.locator('a').click();
-
       const modal = page.getByTestId('modal');
+      await expect(modal).not.toBeVisible();
+
+      await card.locator('a').click();
 
       await expect(modal).toBeVisible();
 
