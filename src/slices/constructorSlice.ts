@@ -23,7 +23,7 @@ interface TConstructorState {
   orderModalData: TNewOrder | null;
 }
 
-const initialState: TConstructorState = {
+export const initialState: TConstructorState = {
   constructorItems: {
     bun: null,
     ingredients: []
